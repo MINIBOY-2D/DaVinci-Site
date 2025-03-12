@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique - AMBY</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <button class="burger">
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+                <li><a href="boutique.html">Boutique</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <button id="theme-toggle" title="Basculer le thème" class="nav-theme-button">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Boutique AMBY</h1>
+        <div class="product">
+            <div class="product-specifications">
+                <h3>Caractéristiques</h3>
+                <ul>
+                    <li>Taille : 50 cm</li>
+                    <li>Poids : 5 kg</li>
+                    <li>Couleur : Rouge</li>
+                    <li>Matériau : Aluminium</li>
+                </ul>
+            </div>
+            <div class="product-image-container">
+                <img src="Image\Boutique\robot1.jpg" alt="AMBY" class="product-image">
+            </div>
+            <div class="product-description">
+                <h3>AMBY</h3>
+                <div class="content-box">
+                    <p>AMBY est un produit unique et innovant conçu pour répondre à vos besoins par des experts.</p>
+                    <p>Total : <span id="total-price">1 300 000 €</span></p>
+                    <div class="action-container">
+                        <button onclick="showStockMessage()">Acheter</button>
+                        <div class="quantity-container">
+                            <button onclick="updateQuantity(-1)">-</button>
+                            <span id="quantity">x1</span>
+                            <button onclick="updateQuantity(1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteneur pour le pop-up -->
+        <div class="message-container"></div>
+    </div>
+
+    <button id="back-to-top" title="Retour en haut">↑</button>
+
+    <footer>
+        <p>© 2025 Athithiyan, Mathis, Benjamin, Yoann. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('nav');
+        const burger = document.querySelector('.burger');
+        const navMenu = document.querySelector('.nav-menu');
+        const container = document.querySelector('.container');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+        const body = document.body;
+        const backToTopButton = document.getElementById('back-to-top');
+
+        // Charger le thème sauvegardé depuis localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeIcon.textContent = '🌙';
+        } else {
+            body.classList.remove('light-mode');
+            themeIcon.textContent = '☀️';
+        }
+
+        // Appliquer l'effet fade-in au chargement de la page
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                container.classList.add('fade-in');
+            }, 100);
+        });
+
+        burger.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                burger.classList.toggle('active');
+                navbar.classList.toggle('expanded');
+                navMenu.classList.toggle('active');
+            } else {
+                navMenu.classList.toggle('active');
+            }
+        });
+
+        // Gestion du mode sombre/clair
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Gestion du bouton "Retour en haut"
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        let quantity = 1;
+        const pricePerUnit = 1300000;
+        let currentImageIndex = 0;
+        const images = ['../../Image/faux robot.png', '../../Image/robot pas fini.png'];
+
+        function showStockMessage() {
+            const messageContainer = document.querySelector('.message-container');
+            const popup = document.createElement('div');
+            popup.classList.add('popup');
+            popup.innerText = 'Cet objet est en rupture de stock';
+
+            messageContainer.appendChild(popup);
+
+            setTimeout(() => {
+                popup.classList.add('visible');
+            }, 10);
+
+            setTimeout(() => {
+                popup.classList.remove('visible');
+                setTimeout(() => {
+                    messageContainer.removeChild(popup);
+                }, 500);
+            }, 3000);
+        }
+
+        function updateQuantity(amount) {
+            quantity += amount;
+            if (quantity < 1) quantity = 1;
+            document.getElementById('quantity').innerText = `x${quantity}`;
+            document.getElementById('total-price').innerText = `${(pricePerUnit * quantity).toLocaleString()} €`;
+        }
+
+        function showNextImage() {
+            const img = document.querySelector('.product-image');
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            img.src = images[currentImageIndex];
+        }
+
+        function showPreviousImage() {
+            const img = document.querySelector('.product-image');
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            img.src = images[currentImageIndex];
+        }
+
+        // Ajuster la navbar si la fenêtre est redimensionnée
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navbar.classList.remove('expanded');
+                navMenu.classList.remove('active');
+                burger.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - AMBY</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <button class="burger">
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+                <li><a href="boutique.html">Boutique</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <button id="theme-toggle" title="Basculer le thème" class="nav-theme-button">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>À propos d'AMBY</h1>
+
+        <div class="accordion">
+            <!-- Sous-rubrique Histoire -->
+            <div class="accordion-item">
+                <h3 onclick="toggleAccordion('histoire')">Notre Histoire</h3>
+                <div id="histoire-content" class="accordion-content">
+                    <div class="content-box">
+                        <p>Non, nous n’avons pas commencé dans un garage (malheureusement). Notre aventure a pris forme dans notre labo, un espace où l’idée d’un projet robotique est née de notre passion commune pour la conception et la programmation.</p>
+                        <p>Dès le départ, nous avons dû relever plusieurs défis : apprendre à utiliser les bons outils et, surtout, travailler en équipe pour donner vie à notre projet. Nous avons commencé par définir les objectifs de notre robot, en réfléchissant aux fonctions qu’il devrait accomplir et aux contraintes techniques à respecter.</p>
+                        <p>Ensuite, nous avons divisé le travail : Mathis et Yoann se sont concentrés sur la conception et l’assemblage/découpage des composants, tandis que Athithiyan et Benjamin ont pris en charge la programmation, tant pour le robot que pour le site web. Chaque test, chaque erreur nous a permis d’affiner notre approche, d’améliorer notre prototype et de mieux comprendre le développement robotique.</p>
+                        <p>Petit à petit, notre robot a pris forme, passant de simples croquis à une véritable machine fonctionnelle. Ce projet n’a pas seulement été une expérience technique enrichissante, mais aussi une aventure où la collaboration et la persévérance ont été essentielles.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sous-rubrique Conception -->
+            <div class="accordion-item">
+                <h3 onclick="toggleAccordion('conception')">Conception</h3>
+                <div id="conception-content" class="accordion-content">
+                    <div class="content-box">
+                        <p>Mathis et Yoann ont travaillé sur la conception physique d’AMBY, transformant des idées en une structure robuste et fonctionnelle.</p>
+                        <div class="code-image-container">
+                            <img src="Image\Infos\Conception\batterie-tr.png" alt="h">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sous-rubrique Programmation -->
+            <div class="accordion-item">
+                <h3 onclick="toggleAccordion('programmation')">Programmation</h3>
+                <div id="programmation-content" class="accordion-content">
+                    <div class="content-box">
+                        <p>Mathis et Yoann ont également codé le robot en C++. Voici un aperçu du code qui donne vie à AMBY :</p>
+                        <div class="code-image-container2">
+                            <img src="Image\Infos\Code\Code2bon.png" alt="Code C++ partie 1">
+                            <img src="Image\Infos\Code\Code1bon.png" alt="Code C++ partie 2">
+                        </div>
+                        <p>Cette partie de programmation a été très difficile à mettre en œuvre, mais elle est essentielle au fonctionnement autonome d’AMBY.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sous-rubrique Site Web -->
+            <div class="accordion-item">
+                <h3 onclick="toggleAccordion('siteweb')">Site Web</h3>
+                <div id="siteweb-content" class="accordion-content">
+                    <div class="content-box">
+                        <p>Athithiyan et Benjamin ont créé ce site pour présenter AMBY, offrant une vitrine numérique à notre projet. Ils ont :</p>
+                        <p>Conçu la structure du site : Nous avons réfléchi à l'organisation des pages et des rubriques afin de rendre le site clair et accessible.</p>
+                        <p>Développé les pages web : Nous avons utilisé HTML, CSS et JavaScript pour coder l'interface et améliorer l'expérience utilisateur.</p>
+                        <p>Ajouté du contenu : Nous avons intégré des textes, images et explications pour présenter le robot et notre démarche.</p>
+                        <p>Testé et amélioré le site : Nous avons ajusté le design, corrigé des bugs et optimisé l'affichage pour un meilleur rendu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="back-to-top" title="Retour en haut">↑</button>
+
+    <footer>
+        <p>© 2025 Athithiyan, Mathis, Benjamin, Yoann. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('nav');
+        const burger = document.querySelector('.burger');
+        const navMenu = document.querySelector('.nav-menu');
+        const container = document.querySelector('.container');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+        const body = document.body;
+        const backToTopButton = document.getElementById('back-to-top');
+
+        // Charger le thème sauvegardé depuis localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeIcon.textContent = '🌙';
+        } else {
+            body.classList.remove('light-mode');
+            themeIcon.textContent = '☀️';
+        }
+
+        // Appliquer l'effet fade-in au chargement de la page
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                container.classList.add('fade-in');
+            }, 100);
+        });
+
+        burger.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                burger.classList.toggle('active');
+                navbar.classList.toggle('expanded');
+                navMenu.classList.toggle('active');
+            } else {
+                navMenu.classList.toggle('active');
+            }
+        });
+
+        // Gestion du mode sombre/clair
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Gestion du bouton "Retour en haut"
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        function toggleAccordion(id) {
+            const content = document.getElementById(`${id}-content`);
+            content.classList.toggle('active');
+        }
+
+        // Ajuster la navbar si la fenêtre est redimensionnée
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navbar.classList.remove('expanded');
+                navMenu.classList.remove('active');
+                burger.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

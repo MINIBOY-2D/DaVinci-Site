@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMBY - Robot Autonome</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <button class="burger">,
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+                <li><a href="boutique.html">Boutique</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <button id="theme-toggle" title="Basculer le thème" class="nav-theme-button">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>AMBY vous souhaite la Bienvenue</h1>
+        <div class="content-box">
+            <p>Découvrez AMBY, un robot autonome né de la passion et de la collaboration d’une équipe dédiée à l’innovation robotique.</p>
+        </div>
+        <div class="code-image-container3">
+            <img src="Image\Accueil\Design sans titre.png" alt="nous">
+        </div>
+    </div>
+
+    <button id="back-to-top" title="Retour en haut">↑</button>
+
+    <footer>
+        <p>© 2025 Athithiyan, Mathis, Benjamin, Yoann. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('nav');
+        const burger = document.querySelector('.burger');
+        const navMenu = document.querySelector('.nav-menu');
+        const container = document.querySelector('.container');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+        const body = document.body;
+        const backToTopButton = document.getElementById('back-to-top');
+
+        // Charger le thème sauvegardé depuis localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeIcon.textContent = '🌙';
+        } else {
+            body.classList.remove('light-mode');
+            themeIcon.textContent = '☀️';
+        }
+
+        // Appliquer l'effet fade-in au chargement de la page
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                container.classList.add('fade-in');
+            }, 100);
+        });
+
+        burger.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                burger.classList.toggle('active');
+                navbar.classList.toggle('expanded');
+                navMenu.classList.toggle('active');
+            } else {
+                navMenu.classList.toggle('active');
+            }
+        });
+
+        // Ajuster la navbar si la fenêtre est redimensionnée
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navbar.classList.remove('expanded');
+                navMenu.classList.remove('active');
+                burger.classList.remove('active');
+            }
+        });
+
+        // Gestion du mode sombre/clair
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Gestion du bouton "Retour en haut"
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

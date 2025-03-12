@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - AMBY</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <button class="burger">
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+                <li><a href="boutique.html">Boutique</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <button id="theme-toggle" title="Basculer le thème" class="nav-theme-button">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Contactez-nous</h1>
+        <h2>Qui a participé ?</h2>
+        <div class="team-container">
+            <div class="team-member">
+                <img src="Image\Personne\Athithiyan.png" alt="Athithiyan" class="team-photo">
+                <h3>MUHUNTHAN Athithiyan</h3>
+                <div class="links">
+                    <a href="https://www.youtube.com/@MINIBOY-67"><img src="Image/Logo/youtube.png" alt="YouTube">YouTube</a>
+                    <a href="https://www.discord.com"><img src="Image\Logo\discord.png" alt="Discord">Discord</a>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="Image\Personne\Mathis.png" alt="Mathis" class="team-photo">
+                <h3>ALLUARD Mathis</h3>
+                <div class="links">
+                    <a href="https://www.youtube.com"><img src="Image/Logo/youtube.png" alt="YouTube">YouTube</a>
+                    <a href="https://www.discord.com"><img src="Image\Logo\discord.png" alt="Discord">Discord</a>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="Image\Personne\Benjamin.png" alt="Benjamin" class="team-photo">
+                <h3>GODARD Benjamin</h3>
+                <div class="links">
+                    <a href="https://www.youtube.com"><img src="Image/Logo/youtube.png" alt="YouTube">YouTube</a>
+                    <a href="https://www.discord.com"><img src="Image\Logo\discord.png" alt="Discord">Discord</a>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="Image\Personne\Yoann.png" alt="Yoann" class="team-photo">
+                <h3>MAGNIN Yoann</h3>
+                <div class="links">
+                    <a href="https://www.youtube.com"><img src="Image/Logo/youtube.png" alt="YouTube">YouTube</a>
+                    <a href="https://www.discord.com"><img src="Image\Logo\discord.png" alt="Discord">Discord</a>
+                </div>
+            </div>
+        </div>
+        <div class="content-box">
+            <p>Pour toute question ou collaboration, remplissez le formulaire ci-dessous ou contactez-nous via notre adresse email : <a href="mailto:contact@ambyproject.com">contact@ambyproject.com</a>.</p>
+        </div>
+        <h2>Formulaire de contact</h2>
+        <form id="contact-form" class="contact-form">
+            <label for="name">Nom</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Envoyer</button>
+        </form>
+        <div id="form-message" class="form-message"></div>
+    </div>
+
+    <button id="back-to-top" title="Retour en haut">↑</button>
+
+    <footer>
+        <p>© 2025 Athithiyan, Mathis, Benjamin, Yoann. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('nav');
+        const burger = document.querySelector('.burger');
+        const navMenu = document.querySelector('.nav-menu');
+        const container = document.querySelector('.container');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+        const body = document.body;
+        const backToTopButton = document.getElementById('back-to-top');
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+
+        // Charger le thème sauvegardé depuis localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeIcon.textContent = '🌙';
+        } else {
+            body.classList.remove('light-mode');
+            themeIcon.textContent = '☀️';
+        }
+
+        // Appliquer l'effet fade-in au chargement de la page
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                container.classList.add('fade-in');
+            }, 100);
+        });
+
+        burger.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                burger.classList.toggle('active');
+                navbar.classList.toggle('expanded');
+                navMenu.classList.toggle('active');
+            } else {
+                navMenu.classList.toggle('active');
+            }
+        });
+
+        // Ajuster la navbar si la fenêtre est redimensionnée
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navbar.classList.remove('expanded');
+                navMenu.classList.remove('active');
+                burger.classList.remove('active');
+            }
+        });
+
+        // Gestion du mode sombre/clair
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Gestion du bouton "Retour en haut"
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Gestion du formulaire de contact
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (name && email && message) {
+                formMessage.textContent = 'Merci pour votre message ! Nous vous répondrons bientôt.';
+                formMessage.style.color = '#ffffff';
+                contactForm.reset();
+            } else {
+                formMessage.textContent = 'Veuillez remplir tous les champs.';
+                formMessage.style.color = '#ff5555';
+            }
+        });
+    </script>
+</body>
+</html>
